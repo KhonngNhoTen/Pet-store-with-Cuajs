@@ -1,0 +1,466 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "description": "This is demo budling apis with Cua end expressjs",
+        "title": "Patstore api",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "localhost:4444"
+        }
+    ],
+    "paths": {
+        "/pet/": {
+            "get": {
+                "description": "",
+                "summary": "",
+                "tags": [
+                    "Pet"
+                ],
+                "operationId": "PET.LIST",
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "",
+                                                        "description": "",
+                                                        "format": ""
+                                                    },
+                                                    "id": {
+                                                        "type": "number",
+                                                        "example": 1,
+                                                        "description": "",
+                                                        "format": ""
+                                                    },
+                                                    "age": {
+                                                        "type": "number",
+                                                        "example": 1,
+                                                        "description": "",
+                                                        "format": ""
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "default": {
+                                        "value": {
+                                            "data": [
+                                                {
+                                                    "name": "",
+                                                    "id": 1,
+                                                    "age": 1
+                                                }
+                                            ]
+                                        },
+                                        "description": "",
+                                        "summary": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "",
+                            "description": "",
+                            "format": ""
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "",
+                            "description": "",
+                            "format": ""
+                        }
+                    }
+                ]
+            },
+            "post": {
+                "description": "",
+                "summary": "",
+                "tags": [
+                    "Pet"
+                ],
+                "operationId": "PET.CREATE",
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "",
+                                        "description": "",
+                                        "format": ""
+                                    },
+                                    "age": {
+                                        "type": "number",
+                                        "example": 1,
+                                        "description": "",
+                                        "format": ""
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "default": {
+                                    "value": {
+                                        "name": "",
+                                        "age": 1
+                                    },
+                                    "description": "",
+                                    "summary": ""
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Ok",
+                                            "description": "",
+                                            "format": ""
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "default": {
+                                        "value": {
+                                            "message": "Ok"
+                                        },
+                                        "description": "",
+                                        "summary": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": []
+            }
+        },
+        "/pet/{idPet}": {
+            "delete": {
+                "description": "",
+                "summary": "",
+                "tags": [
+                    "Pet"
+                ],
+                "operationId": "PET.DELETE",
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Ok",
+                                            "description": "",
+                                            "format": ""
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "default": {
+                                        "value": {
+                                            "message": "Ok"
+                                        },
+                                        "description": "",
+                                        "summary": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "idPet",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "",
+                            "description": "",
+                            "format": ""
+                        }
+                    }
+                ]
+            }
+        },
+        "/pet/{idPet}/upload": {
+            "post": {
+                "description": "",
+                "summary": "",
+                "tags": [
+                    "Pet"
+                ],
+                "operationId": "PET.UPLOAD_IMAGE",
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Ok",
+                                            "description": "",
+                                            "format": ""
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "default": {
+                                        "value": {
+                                            "message": "Ok"
+                                        },
+                                        "description": "",
+                                        "summary": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "idPet",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "",
+                            "description": "",
+                            "format": ""
+                        }
+                    }
+                ]
+            }
+        },
+        "/pet/{idPet}/download-image": {
+            "get": {
+                "description": "",
+                "summary": "",
+                "tags": [
+                    "Pet"
+                ],
+                "operationId": "PET.DOWNLOAD_IMAGE",
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "image/jpeg": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "idPet",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "",
+                            "description": "",
+                            "format": ""
+                        }
+                    }
+                ]
+            }
+        },
+        "/login": {
+            "post": {
+                "description": "",
+                "summary": "",
+                "tags": [
+                    "Authentication"
+                ],
+                "operationId": "LOGIN",
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "example": "username",
+                                        "description": "",
+                                        "format": ""
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password",
+                                        "description": "",
+                                        "format": ""
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "default": {
+                                    "value": {
+                                        "username": "username",
+                                        "password": "password"
+                                    },
+                                    "description": "",
+                                    "summary": ""
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "username": {
+                                            "type": "string",
+                                            "example": "username",
+                                            "description": "",
+                                            "format": ""
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "",
+                                            "description": "",
+                                            "format": ""
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "default": {
+                                        "value": {
+                                            "username": "username",
+                                            "token": ""
+                                        },
+                                        "description": "",
+                                        "summary": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": []
+            }
+        },
+        "/logout": {
+            "post": {
+                "description": "",
+                "summary": "",
+                "tags": [
+                    "Authentication"
+                ],
+                "operationId": "LOGOUT",
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Ok",
+                                            "description": "",
+                                            "format": ""
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "default": {
+                                        "value": {
+                                            "message": "Ok"
+                                        },
+                                        "description": "",
+                                        "summary": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": []
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "default": {
+                "type": "http",
+                "scheme": "basic"
+            }
+        }
+    }
+}
