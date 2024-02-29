@@ -1,22 +1,20 @@
 const glob = require("glob");
-const path = require("path")
-require("../config/DocumentationConfig")
+const path = require("path");
+require("../config/DocumentationConfig");
 
-function loadRoute () {
+function loadRoute() {
+  const myPath = path.join(__dirname, "**.route.js").replace(/\\/g, "/");
 
-const myPath = path.join(__dirname, "**.route.js").replace(/\\/g, "/")
-
- const files = glob.sync(myPath);
- /** @type {import("../../Cua/build/Route/Route")[]} */
- let routes = [];
- for (let i = 0; i < files.length; i++)  {
+  const files = glob.sync(myPath);
+  /** @type {import("../../Cua/build/Route/Route")[]} */
+  let routes = [];
+  for (let i = 0; i < files.length; i++) {
     /** @type {import("../../Cua/build/Route/Route").Route} */
-    const route = require(files[i])
-     routes.push(...route.listRoutes());
- }
+    const route = require(files[i]);
+    routes.push(...route.listRoutes());
+  }
 
-
- return routes;
+  return routes;
 }
 
 module.exports = loadRoute;

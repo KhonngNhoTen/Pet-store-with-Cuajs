@@ -1,4 +1,4 @@
-const { Route, StreamData, ContentStream } = require("../../Cua/build").Router;
+const { Route, StreamData, ContentStream } = require("../../Cua").Router;
 
 module.exports = new Route({
   baseUrl: "/pet",
@@ -32,43 +32,43 @@ module.exports = new Route({
       },
       request: {
         name: "",
-        age: 1
+        age: 1,
       },
       response: {
         message: "Ok",
       },
     },
     {
-        url: "DELETE /:idPet",
-        code: "PET.DELETE",
-        handler: async (req, res, next) => {
-          console.log(req.params);
-          res.json("logout");
-        },
-        response: {
-          message: "Ok",
-        },
+      url: "DELETE /:idPet",
+      code: "PET.DELETE",
+      handler: async (req, res, next) => {
+        console.log(req.params);
+        res.json("logout");
       },
+      response: {
+        message: "Ok",
+      },
+    },
     {
-        url: "POST /:idPet/upload",
-        code: "PET.UPLOAD_IMAGE",
-        handler: async (req, res, next) => {
-          console.log(req.params);
-          res.json("pet upload image");
-        },
-        request: new StreamData().singleFile("file"),
-        response: {
-          message: "Ok",
-        },
+      url: "POST /:idPet/upload",
+      code: "PET.UPLOAD_IMAGE",
+      handler: async (req, res, next) => {
+        console.log(req.params);
+        res.json("pet upload image");
       },
+      request: new StreamData().singleFile("file"),
+      response: {
+        message: "Ok",
+      },
+    },
     {
-        url: "GET /:idPet/download-image",
-        code: "PET.DOWNLOAD_IMAGE",
-        handler: async (req, res, next) => {
-          console.log(req.params);
-          res.json("pet download image");
-        },
-        response: new StreamData().addType(ContentStream.JPEG),
+      url: "GET /:idPet/download-image",
+      code: "PET.DOWNLOAD_IMAGE",
+      handler: async (req, res, next) => {
+        console.log(req.params);
+        res.json("pet download image");
       },
+      response: new StreamData().addType(ContentStream.JPEG),
+    },
   ],
 });

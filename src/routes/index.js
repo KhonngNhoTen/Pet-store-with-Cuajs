@@ -1,11 +1,15 @@
 const loadRoute = require("./loader-rotue");
 
 const router = require("express").Router();
-const {RouteLoader} = require("../../Cua/build").Router;
-const {SwaggerLoader} = require("../../Cua/build").Swagger;
+const { RouteLoader } = require("../../Cua").Router;
+const { SwaggerLoader } = require("../../Cua").Swagger;
 
-new RouteLoader({
-    routeHandlers: [new SwaggerLoader()] 
-}).load(loadRoute(), router);
+async function load() {
+  await new RouteLoader({
+    routeHandlers: [new SwaggerLoader()],
+  }).load(loadRoute(), router);
 
-module.exports = router;
+  return router;
+}
+
+module.exports = load;
