@@ -1,7 +1,8 @@
-import { SwaggerBuilder } from "../Swagger/Core/SwaggerBuilder";
-import { BaseRouteDataTransform } from "./BaseRouteDataTransform";
-import RouteLoader from "./RouteLoader";
-export type RouteSchema = {
+import { Route } from "./Route";
+import { RouteRequest } from "./RouteRequest";
+import { RouteResponse } from "./RouteResponse";
+import { RouteStreamData } from "./RouteStreamData";
+export type InputRouteSchema = {
     code: string;
     description?: string;
     tags?: string[];
@@ -9,10 +10,25 @@ export type RouteSchema = {
     method?: string;
     middlewares?: Promise<void>[];
     handler?: (...params: any) => Promise<void>;
-    request?: Object | BaseRouteDataTransform;
-    response?: Record<string, RouteDataTransform | BaseRouteDataTransform> | BaseRouteDataTransform;
+    request?: InputRequest;
+    response?: InputResponse;
     parameters?: string[] | RouteParameter;
-    childs?: RouteSchema[];
+    childs?: InputRouteSchema[];
+    security?: boolean | string[];
+    baseUrl?: string;
+};
+export type RouteSchema = {
+    code?: string;
+    description?: string;
+    tags?: string[];
+    url?: string;
+    method?: string;
+    middlewares?: Promise<void>[];
+    handler?: (...params: any) => Promise<void>;
+    request?: RouteRequest | RouteStreamData;
+    response?: RouteResponse | RouteStreamData;
+    parameters?: RouteParameter;
+    childs?: Route[];
     security?: boolean | string[];
     baseUrl?: string;
 };
@@ -22,22 +38,39 @@ export type NormalizationRoute = (...param: any[]) => {
     next: any;
     extraData: any;
 };
-export type RouteConfigSchema = {
-    path: string;
-    swaggerConfig: SwaggerBuilder;
-    routeLoader?: RouteLoader;
-    routeNormalization?: NormalizationRoute;
+export type InputRouteDataTransform = Record<string, any> | Record<string, Record<string, any>>;
+export type InputResponse = Record<string, InputRouteDataTransform>;
+export type InputRequest = Object;
+export type LocationParameter = "query" | "header" | "path" | "cookie";
+export type InputParameters = string[] | {
+    path?: Record<string, InputRouteDataTransform>;
+    query?: Record<string, InputRouteDataTransform>;
+    header?: Record<string, InputRouteDataTransform>;
+    cookie?: Record<string, InputRouteDataTransform>;
 };
-export type RouteDataTransform = Record<string, any> | Record<string, Record<string, any>>;
+export type RouteDecorAttribute = {
+    type: string;
+    example: any;
+    description: string;
+    format?: string;
+    nullable?: boolean;
+    decorators?: Record<string, RouteDecorAttribute>;
+};
+export type RouteAttributeData = {
+    type: string;
+    example: any;
+    description: string;
+    format?: string;
+    nullable?: boolean;
+};
 export type RouteParameterAttributes = {
     description?: string;
     required?: boolean;
     example?: any;
 };
-export type LocationParameter = "query" | "header" | "path" | "cookie";
 export type RouteParameter = {
-    path?: RouteDataTransform;
-    query?: RouteDataTransform;
-    header?: RouteDataTransform;
-    cookie?: RouteDataTransform;
+    path?: Record<string, RouteParameterAttributes>;
+    query?: Record<string, RouteParameterAttributes>;
+    header?: Record<string, RouteParameterAttributes>;
+    cookie?: Record<string, RouteParameterAttributes>;
 };

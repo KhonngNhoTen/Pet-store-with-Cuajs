@@ -1,6 +1,7 @@
-const { Route, StreamData, ContentStream } = require("../../Cua").Router;
+const Pet = require("../Schema/Pet.schema");
 
-module.exports = new Route({
+const { RouteLoader, RouteStreamData, ContentStream } = require("../../Cua").Router;
+RouteLoader.addRoute({
   baseUrl: "/pet",
   description: "All api for manages pets",
   tags: ["Pet"],
@@ -14,13 +15,10 @@ module.exports = new Route({
         res.json("list of pet");
       },
       response: {
-        data: [
-          {
-            name: "",
-            id: 1,
-            age: 1,
-          },
-        ],
+        data: {
+          name: "",
+          age: 0,
+        },
       },
     },
     {
@@ -32,7 +30,7 @@ module.exports = new Route({
       },
       request: {
         name: "",
-        age: 1,
+        age: 0,
       },
       response: {
         message: "Ok",
@@ -56,7 +54,7 @@ module.exports = new Route({
         console.log(req.params);
         res.json("pet upload image");
       },
-      request: new StreamData().singleFile("file"),
+      request: new RouteStreamData().singleFile("file"),
       response: {
         message: "Ok",
       },
@@ -68,7 +66,7 @@ module.exports = new Route({
         console.log(req.params);
         res.json("pet download image");
       },
-      response: new StreamData().addType(ContentStream.JPEG),
+      response: new RouteStreamData().fields({ name: "name s" }).addType(ContentStream.JPEG),
     },
   ],
 });

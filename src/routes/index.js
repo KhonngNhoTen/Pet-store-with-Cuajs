@@ -1,13 +1,14 @@
-const loadRoute = require("./loader-rotue");
-
 const router = require("express").Router();
 const { RouteLoader } = require("../../Cua").Router;
 const { SwaggerLoader } = require("../../Cua").Swagger;
-
+const path = require("path");
+require("../config/DocumentationConfig");
 async function load() {
-  await new RouteLoader({
-    routeHandlers: [new SwaggerLoader()],
-  }).load(loadRoute(), router);
+  const routeLoader = RouteLoader.config({
+    plugins: [new SwaggerLoader()],
+    path: path.join(__dirname, "./**.route.js"),
+  });
+  await routeLoader.load(router);
 
   return router;
 }

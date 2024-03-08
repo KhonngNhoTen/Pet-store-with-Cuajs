@@ -1,15 +1,25 @@
-import { IRouteHandler } from "./IRouteHandler";
-import { Route } from "./Route";
-import { NormalizationRoute } from "./type";
+import { IRoutePlugin, RoutePlugin } from "./RoutePlugin";
+import { InputRouteSchema, NormalizationRoute } from "./type";
 type RouteLoaderOptions = {
     normalization?: NormalizationRoute;
-    routeHandlers?: IRouteHandler[];
+    plugins?: IRoutePlugin[] | RoutePlugin[];
+    path: string;
 };
-declare class RouteLoader implements IRouteHandler {
+declare class RouteLoader {
     private normalization;
-    private routeHandlers;
-    constructor(options: RouteLoaderOptions);
-    handler(routes: Route[], router: any): Promise<void>;
-    load(routes: Route[], router: any): Promise<void>;
+    private beforeCreateRouteHooks;
+    private afterCreateRouteHooks;
+    private registerMiddlewareHooks;
+    private path;
+    private apis;
+    constructor(options?: RouteLoaderOptions);
+    private static instance;
+    static get Instance(): RouteLoader;
+    static addRoute(input: InputRouteSchema): void;
+    private static createRoute;
+    static config(options: RouteLoaderOptions): RouteLoader;
+    private addHooks;
+    private registerMiddlewares;
+    load(router: any): Promise<void>;
 }
 export default RouteLoader;

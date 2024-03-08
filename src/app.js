@@ -2,11 +2,12 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const morgan = require("morgan");
 const swaggerUi = require("swagger-ui-express");
-const swaggerDocument = require("../documentation.json");
 const express = require("express");
 const app = express();
 
 async function createApp() {
+  const router = await require("./routes")();
+
   app.use(cors());
 
   // parse application/x-www-form-urlencoded
@@ -19,14 +20,13 @@ async function createApp() {
     explorer: true,
   };
 
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(require("../documentation.json"), options));
   app.use(
     morgan(
       "\x1b[33m [:date[iso]] :method :url - \x1b[38;5;36mUser :remote-addr  :user-agent - \x1b[38;5;75mResponse status=:status :response-time ms"
     )
   );
-  const loadRoute = require("./routes");
-  app.use("/", await loadRoute());
+  app.use("/", router);
 
   app.use(async (data, req, res, next) => {
     if (data instanceof Error) {
@@ -38,7 +38,8 @@ async function createApp() {
       res.status(status).json({ ...data, success: true });
     }
   });
-
+  // const listRoute = require("express-list-endpoints");
+  // console.log(listRoute(app));
   return app;
 }
 

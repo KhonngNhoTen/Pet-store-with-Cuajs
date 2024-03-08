@@ -1,25 +1,24 @@
-import { BaseRouteDataTransform } from "./BaseRouteDataTransform";
-import { RouteDataTransform, RouteParameter, RouteSchema } from "./type";
+import { RouteRequest } from "./RouteRequest";
+import { RouteResponse } from "./RouteResponse";
+import { RouteStreamData } from "./RouteStreamData";
+import { InputRouteSchema, RouteParameter, RouteSchema } from "./type";
 export declare class Route {
-    code: string;
+    code?: string;
     url?: string;
     baseUrl?: string;
-    method: string;
+    method?: string;
     description: string;
     summary: string;
     tags?: string[];
     middlewares: Promise<void>[];
     handler?: (...params: any) => Promise<void>;
-    request?: Object | BaseRouteDataTransform;
-    response: Record<string, RouteDataTransform | BaseRouteDataTransform> | BaseRouteDataTransform;
+    request?: RouteRequest | RouteStreamData;
+    response?: RouteResponse | RouteStreamData;
     parameters?: RouteParameter;
-    childs: Route[];
+    childs?: Route[];
     security?: string[] | boolean;
-    constructor(schema: RouteSchema, parentSchema?: RouteSchema);
-    protected createChilds(schemas: RouteSchema[], currentSchema?: RouteSchema): Route[];
-    getParams(routeUrl: string, baseUrl?: string): void;
-    static formatUrl2SwaggerPath(url: string, handler?: (param: string) => void): string;
-    registry(req: any): void;
+    constructor(schema: RouteSchema, parentSchema?: InputRouteSchema);
+    registry(req: any, globalMiddlewares?: any[]): void;
     listRoutes(): Route[];
     isAPI(): boolean;
 }

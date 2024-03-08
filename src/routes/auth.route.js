@@ -1,6 +1,6 @@
-const { Route, StreamData } = require("../../Cua").Router;
+const { RouteLoader } = require("../../Cua").Router;
 
-module.exports = new Route({
+RouteLoader.addRoute({
   baseUrl: "/",
   tags: ["Authentication"],
   childs: [

@@ -1,14 +1,14 @@
-import { BaseRouteDataTransform } from "./Route/BaseRouteDataTransform";
 import { Route } from "./Route/Route";
 import RouteLoader from "./Route/RouteLoader";
-import { StreamData } from "./Route/StreamData";
-import { SwaggerBuilder } from "./Swagger/Core/SwaggerBuilder";
-import { SwaggerLoader } from "./Swagger/Core/SwaggerLoader";
+import { RouteStreamData } from "./Route/RouteStreamData";
+import { Schema } from "./Plugins/Schemas/Schema";
+import { SchemaLoader } from "./Plugins/Schemas/SchemaLoader";
+import { SwaggerBuilder } from "./Plugins/Swagger/Core/SwaggerBuilder";
+import { SwaggerLoader } from "./Plugins/Swagger/Core/SwaggerLoader";
 export declare const Router: {
     Route: typeof Route;
-    StreamData: typeof StreamData;
+    RouteStreamData: typeof RouteStreamData;
     RouteLoader: typeof RouteLoader;
-    BaseRouteDataTransform: typeof BaseRouteDataTransform;
     ContentStream: {
         GIF: string;
         JPEG: string;
@@ -32,4 +32,8 @@ export declare const Router: {
 export declare const Swagger: {
     SwaggerBuilder: typeof SwaggerBuilder;
     SwaggerLoader: typeof SwaggerLoader;
+};
+export declare const Schemas: {
+    Schema: typeof Schema;
+    SchemaLoader: typeof SchemaLoader;
 };
