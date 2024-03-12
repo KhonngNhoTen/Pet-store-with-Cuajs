@@ -10,6 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SchemaLoader = void 0;
+const RouteRequest_1 = require("../../Route/RouteRequest");
+const RouteResponse_1 = require("../../Route/RouteResponse");
+const Schema_1 = require("./Schema");
 class SchemaLoader {
     constructor(options) {
         var _a;
@@ -18,14 +21,41 @@ class SchemaLoader {
     }
     createPlugin() {
         return {
-            beforeCreateRoute: this.beforeCreateRoute,
-            registerMiddleware: this.createMiddleware,
+            beforeCreateRoute: (input, outSchema) => this.beforeCreateRoute(input, outSchema),
+            // registerMiddleware: this.createMiddleware,
         };
     }
+    /**
+     * For request and reponse. Type is allowed:
+     * - Schema
+     * - Record <string, Schema>
+     */
     beforeCreateRoute(input, outSchema) {
-        return {
-            code: input.code,
-        };
+        if (input.request) {
+            const request = this.parseRoute(input.request, true);
+            if (request && request instanceof RouteRequest_1.RouteRequest)
+                outSchema.request = request;
+        }
+        if (input.response) {
+            const response = this.parseRoute(input.response, false);
+            if (response && response instanceof RouteResponse_1.RouteResponse)
+                outSchema.response = response;
+        }
+        return outSchema;
+    }
+    parseRoute(data, isRequest = true) {
+        const ClassData = isRequest ? RouteRequest_1.RouteRequest : RouteResponse_1.RouteResponse;
+        if (data instanceof Schema_1.Schema && data.decorations)
+            return new ClassData(undefined, data.decorations);
+        if (typeof data === "object" && !isRequest) {
+            const newData = {};
+            for (const [key, val] of Object.entries(data))
+                if (val instanceof Schema_1.Schema && val.decorations)
+                    newData[key] = val.decorations;
+            if (Object.keys(newData).length > 0)
+                return new ClassData(undefined, newData);
+        }
+        return;
     }
     createMiddleware(route) {
         return __awaiter(this, void 0, void 0, function* () {

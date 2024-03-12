@@ -1,10 +1,9 @@
-const { Schema } = require("../../Cua").Schemas;
-class Pet extends Schema {
-  data = {
-    id: 0,
-    name: "ten pet",
-    age: 18,
-  };
-}
+const Joi = require("joi");
 
-module.exports = Pet;
+const { Schema } = require("../../Cua").Schemas;
+module.exports = new Schema(
+  Joi.object().keys({
+    age: Joi.string(),
+    name: Joi.string().length(255),
+  })
+);

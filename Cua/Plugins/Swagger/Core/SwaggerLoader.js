@@ -20,6 +20,7 @@ const Parameter_1 = require("../Component/Parameter/Parameter");
 const SwaggerBuilder_1 = require("./SwaggerBuilder");
 const BaseSchema_1 = require("../Component/Schema/BaseSchema");
 const RouteStreamData_1 = require("../../../Route/RouteStreamData");
+const Schema_1 = require("../Component/Schema/Schema");
 class SwaggerLoader {
     createPlugin() {
         return {
@@ -62,8 +63,11 @@ class SwaggerLoader {
         if (request instanceof RouteStreamData_1.RouteStreamData)
             return new DataTransform_1.DataTransform(new MediaData_1.MediaData().createByFile(request)).genSwagger();
         if (request.decorators) {
+            const schema = this.schemaByDecoration(request.decorators);
+            return new DataTransform_1.DataTransform(new MediaData_1.MediaData({ schema })).genSwagger();
         }
-        return new DataTransform_1.DataTransform(new MediaData_1.MediaData().fromRoute(request.data)).genSwagger();
+        else
+            return new DataTransform_1.DataTransform(new MediaData_1.MediaData().fromRoute(request.data)).genSwagger();
     }
     createResponse(route) {
         let resOpts = {};
@@ -72,7 +76,13 @@ class SwaggerLoader {
         const response = route.response;
         if (response instanceof RouteStreamData_1.RouteStreamData)
             resOpts.default = new DataTransform_1.DataTransform(new MediaData_1.MediaData().createByFile(response)).genSwagger();
+        else if (response.decorators) {
+            const schema = this.schemaByDecoration(response.decorators);
+            resOpts.default = new DataTransform_1.DataTransform(new MediaData_1.MediaData({ schema })).genSwagger();
+        }
         else {
+            if (!response.data)
+                return null;
             const prefixs = Object.keys(response.data);
             for (let i = 0; i < prefixs.length; i++) {
                 const prefix = prefixs[i];
@@ -105,6 +115,34 @@ class SwaggerLoader {
             return [{ ["default"]: [] }];
         return security.map((e) => {
             return { e: [] };
+        });
+    }
+    schemaByDecoration(decorators) {
+        var _a, _b;
+        console.log(decorators.type);
+        if (decorators.type === "object") {
+            const objectSchema = new Schema_1.Schema({ type: BaseSchema_1.String2Type[decorators.type] });
+            Object.keys((_a = decorators.decorators) !== null && _a !== void 0 ? _a : {}).forEach((e) => {
+                if (!decorators.decorators)
+                    return;
+                const schema = this.schemaByDecoration(decorators.decorators[e]);
+                objectSchema.addNode(schema, e);
+            });
+            return objectSchema;
+        }
+        else if (decorators.type === "array") {
+            const arrSchema = new Schema_1.Schema({ type: BaseSchema_1.String2Type[decorators.type] });
+            if (decorators.decorators)
+                arrSchema.addNode(this.schemaByDecoration(decorators.decorators.item));
+            return arrSchema;
+        }
+        return new Schema_1.Schema({
+            description: decorators.description,
+            type: BaseSchema_1.String2Type[(_b = decorators.type) !== null && _b !== void 0 ? _b : "string"],
+            enum: decorators.enum,
+            nullable: decorators.required,
+            example: decorators.example,
+            format: decorators.format,
         });
     }
 }

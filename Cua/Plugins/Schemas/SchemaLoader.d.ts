@@ -8,7 +8,13 @@ export declare class SchemaLoader implements IRoutePlugin {
     private customError?;
     constructor(options: SchemaLoaderOptions);
     createPlugin(): RoutePlugin;
+    /**
+     * For request and reponse. Type is allowed:
+     * - Schema
+     * - Record <string, Schema>
+     */
     private beforeCreateRoute;
+    private parseRoute;
     private createMiddleware;
     private middleware;
 }

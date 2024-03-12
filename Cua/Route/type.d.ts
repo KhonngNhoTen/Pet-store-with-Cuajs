@@ -10,8 +10,8 @@ export type InputRouteSchema = {
     method?: string;
     middlewares?: Promise<void>[];
     handler?: (...params: any) => Promise<void>;
-    request?: InputRequest;
-    response?: InputResponse;
+    request?: InputRequest | RouteRequest;
+    response?: InputResponse | RouteResponse;
     parameters?: string[] | RouteParameter;
     childs?: InputRouteSchema[];
     security?: boolean | string[];
@@ -49,12 +49,14 @@ export type InputParameters = string[] | {
     cookie?: Record<string, InputRouteDataTransform>;
 };
 export type RouteDecorAttribute = {
-    type: string;
-    example: any;
-    description: string;
+    type?: "number" | "string" | "boolean" | "array" | "object";
+    example?: any;
+    description?: string;
     format?: string;
-    nullable?: boolean;
+    required?: boolean;
+    enum?: any[];
     decorators?: Record<string, RouteDecorAttribute>;
+    name?: string;
 };
 export type RouteAttributeData = {
     type: string;

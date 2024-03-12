@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseSchema = exports.TYPES = void 0;
+exports.BaseSchema = exports.String2Type = exports.TYPES = void 0;
 var TYPES;
 (function (TYPES) {
     TYPES[TYPES["STRING"] = 0] = "STRING";
@@ -10,6 +10,13 @@ var TYPES;
     TYPES[TYPES["FILE"] = 4] = "FILE";
     TYPES[TYPES["BOOLEAN"] = 5] = "BOOLEAN";
 })(TYPES || (exports.TYPES = TYPES = {}));
+exports.String2Type = {
+    string: TYPES.STRING,
+    array: TYPES.ARRAY,
+    boolean: TYPES.BOOLEAN,
+    number: TYPES.NUMBER,
+    object: TYPES.OBJECT,
+};
 class BaseSchema {
     constructor(options) {
         var _a, _b, _c, _d, _e, _f;
@@ -65,7 +72,7 @@ class BaseSchema {
             return TYPES.BOOLEAN;
         if (typeof value === "object")
             return TYPES.OBJECT;
-        throw new Error("Type not support");
+        throw new Error(`Type [${type}] not support - Value ${value}`);
     }
 }
 exports.BaseSchema = BaseSchema;

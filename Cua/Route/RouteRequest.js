@@ -4,7 +4,8 @@ exports.RouteRequest = void 0;
 class RouteRequest {
     constructor(data, decorators) {
         this.data = {};
-        this.data = data !== null && data !== void 0 ? data : {};
+        if (data)
+            this.data = data;
         this.decorators = decorators;
     }
 }

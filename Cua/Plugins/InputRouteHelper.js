@@ -13,9 +13,9 @@ class InputRouteHelper {
     convertInput(input, out, parentSchema) {
         const resultPath = this.convertParameter(input, parentSchema);
         out = Object.assign(Object.assign({}, out), resultPath);
-        if (input.request && !(input.request instanceof RouteRequest_1.RouteRequest) && !(input.request instanceof RouteStreamData_1.RouteStreamData))
+        if (input.request && !(out.request instanceof RouteRequest_1.RouteRequest) && !(input.request instanceof RouteStreamData_1.RouteStreamData))
             out.request = new RouteRequest_1.RouteRequest(input.request);
-        if (input.response && !(input.response instanceof RouteResponse_1.RouteResponse) && !(input.response instanceof RouteStreamData_1.RouteStreamData))
+        if (input.response && !(out.response instanceof RouteResponse_1.RouteResponse) && !(input.response instanceof RouteStreamData_1.RouteStreamData))
             out.response = new RouteResponse_1.RouteResponse(input.response);
         if (input.request instanceof RouteStreamData_1.RouteStreamData)
             out.request = input.request;

@@ -1,10 +1,10 @@
 import { RouteDecorAttribute } from "./type";
 export declare class RouteResponse {
-    data: {
+    data?: {
         [httpStatus: string]: any;
     };
-    decorators?: Record<string, Record<string, RouteDecorAttribute>>;
+    decorators?: RouteDecorAttribute;
     private defaultPrefix;
-    constructor(data?: Object, decorators?: Record<string, Record<string, RouteDecorAttribute>> | Record<string, RouteDecorAttribute>);
+    constructor(data?: Object, decorators?: RouteDecorAttribute | Record<string, RouteDecorAttribute>);
     isWrapperRepsonse(response: Object): boolean;
 }

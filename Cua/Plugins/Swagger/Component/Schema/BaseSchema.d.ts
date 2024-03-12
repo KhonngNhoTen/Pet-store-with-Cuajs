@@ -1,7 +1,7 @@
 import { ISwaggerComponent } from "../../Core/ISwaggerComponent";
 import { SwaggerSchema } from "../../type";
 export type BaseSchemaOptions = {
-    type: TYPES;
+    type?: TYPES;
     nullable?: boolean;
     example?: any;
     description?: string;
@@ -18,6 +18,13 @@ export declare enum TYPES {
     FILE = 4,
     BOOLEAN = 5
 }
+export declare const String2Type: {
+    string: TYPES;
+    array: TYPES;
+    boolean: TYPES;
+    number: TYPES;
+    object: TYPES;
+};
 export declare class BaseSchema implements ISwaggerComponent {
     type?: TYPES;
     nodes: Record<string, BaseSchema>;

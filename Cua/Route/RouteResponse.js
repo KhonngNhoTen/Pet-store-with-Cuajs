@@ -5,12 +5,12 @@ class RouteResponse {
     constructor(data, decorators) {
         this.data = {};
         this.defaultPrefix = "default";
-        if (!data)
-            return;
-        if (!this.isWrapperRepsonse(data)) {
-            this.data = { [this.defaultPrefix]: data };
+        const checkData = data !== null && data !== void 0 ? data : decorators;
+        if (!this.isWrapperRepsonse(checkData)) {
+            if (data)
+                this.data = { [this.defaultPrefix]: data };
             if (decorators)
-                this.decorators = { [this.defaultPrefix]: decorators };
+                this.decorators = decorators;
             return;
         }
         this.data = data;

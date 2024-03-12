@@ -1,4 +1,6 @@
 import { Route } from "../../../Route/Route";
+import { RouteDecorAttribute } from "../../../Route/type";
+import { BaseSchema } from "../Component/Schema/BaseSchema";
 import { IRoutePlugin, RoutePlugin } from "../../../Route/RoutePlugin";
 export declare class SwaggerLoader implements IRoutePlugin {
     createPlugin(): RoutePlugin;
@@ -12,4 +14,5 @@ export declare class SwaggerLoader implements IRoutePlugin {
     private createResponse;
     private createParameters;
     private createSecurity;
+    schemaByDecoration(decorators: RouteDecorAttribute): BaseSchema;
 }
